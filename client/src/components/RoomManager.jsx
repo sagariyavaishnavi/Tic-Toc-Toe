@@ -18,9 +18,8 @@ export default function RoomManager({ onReady, playerName, setPlayerName }) {
     const newSocket = io(SOCKET_SERVER_URL);
     setSocket(newSocket);
 
-    return () => {
-      newSocket.disconnect();
-    };
+    // We do NOT disconnect the socket on unmount here, 
+    // because we need to pass this live socket to the GameController!
   }, []);
 
   useEffect(() => {
