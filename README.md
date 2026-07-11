@@ -1,16 +1,52 @@
-# React + Vite
+# Real-Time Multiplayer Tic-Tac-Toe
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A stunning, real-time multiplayer Tic-Tac-Toe game built with modern web technologies. Challenge the unbeatable computer AI or play against friends online in private rooms!
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Real-Time Multiplayer**: Instantly create a 6-digit room code and share it with a friend to play together in real-time.
+- **Smart AI Opponent**: Play locally against the computer. The computer is powered by the unbeatable **Minimax algorithm**.
+- **Custom Player Names**: Set your display name so your friends know who is crushing them.
+- **Premium UI & Aesthetics**: Built with an immersive dark theme, glassmorphism components, sleek gradients, and subtle CSS animations to provide a top-tier user experience.
+- **Responsive Design**: Play on your phone, tablet, or desktop.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Frontend**: React, Vite, Tailwind CSS v4, Lucide React (Icons)
+- **Backend**: Node.js, Express
+- **Real-Time Communication**: Socket.IO
 
-## Expanding the Oxlint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+To run this project locally, you will need two terminal windows open—one for the backend server and one for the frontend client.
+
+### 1. Start the Backend Server
+
+```bash
+cd server
+npm install
+npm run dev
+```
+*The server will run on `http://localhost:PORT_NUMBER` using `node --watch`.*
+
+### 2. Start the Frontend Client
+
+In a new terminal window:
+```bash
+cd client
+npm install
+npm run dev
+```
+*The Vite development server will start and provide a local URL (e.g., `http://localhost:PORT_NUMBER`).*
+
+## 🎮 How to Play
+
+1. Enter your custom name on the **Start Screen** (or leave it as Player).
+2. Choose your mode:
+   - **Play Computer**: Jump right into a match against the AI.
+   - **Play Friend**: Click "Create Room" to generate a 6-digit code. Send this code to your friend, and they can click "Join Room" to enter your game.
+3. The first player to align 3 of their symbols (X or O) vertically, horizontally, or diagonally wins!
+
+## 📝 License
+
+This project is completely open source. Feel free to fork, modify, and build upon it!
