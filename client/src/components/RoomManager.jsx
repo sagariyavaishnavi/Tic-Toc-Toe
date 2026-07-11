@@ -3,8 +3,8 @@ import { io } from 'socket.io-client';
 import { Loader2, User } from 'lucide-react';
 import { cn } from '../lib/utils';
 
-// Connect to backend (adjust URL in production)
-const SOCKET_SERVER_URL = "http://localhost:3001";
+// Connect to backend (use environment variable in production, fallback to localhost in dev)
+const SOCKET_SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3001";
 
 export default function RoomManager({ onReady, playerName, setPlayerName }) {
   const [view, setView] = useState('choose'); // choose | create | join
