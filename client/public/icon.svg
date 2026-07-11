@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <g stroke="#FACC15" stroke-width="3.5" stroke-linecap="round" fill="none">
+    <!-- Grid -->
+    <path d="M 36 10 Q 33 50 38 90" />
+    <path d="M 35 12 Q 37 50 35 88" stroke-width="1.5" opacity="0.6" />
+    <path d="M 64 12 Q 67 50 62 88" />
+    <path d="M 65 10 Q 63 50 65 90" stroke-width="1.5" opacity="0.6" />
+    <path d="M 10 36 Q 50 33 90 38" />
+    <path d="M 12 35 Q 50 37 88 35" stroke-width="1.5" opacity="0.6" />
+    <path d="M 12 64 Q 50 67 88 62" />
+    <path d="M 10 65 Q 50 63 90 65" stroke-width="1.5" opacity="0.6" />
+    
+    <!-- Top-left O -->
+    <circle cx="23" cy="23" r="7" />
+    <circle cx="23.5" cy="22.5" r="6.5" stroke-width="1.5" opacity="0.6" />
+    
+    <!-- Top-mid X -->
+    <path d="M 44 17 Q 50 22 56 29" />
+    <path d="M 56 16 Q 50 24 44 28" />
+    <path d="M 43.5 17.5 Q 50 23 55.5 28.5" stroke-width="1.5" opacity="0.6" />
+    
+    <!-- Mid-mid O -->
+    <circle cx="50" cy="50" r="7.5" />
+    <circle cx="49.5" cy="50.5" r="7" stroke-width="1.5" opacity="0.6" />
+    
+    <!-- Mid-left X -->
+    <path d="M 17 44 Q 23 49 29 56" />
+    <path d="M 29 43 Q 23 51 17 55" />
+    
+    <!-- Mid-right X -->
+    <path d="M 71 44 Q 77 49 83 56" />
+    <path d="M 83 43 Q 77 51 71 55" />
+    
+    <!-- Bottom-right O -->
+    <circle cx="77" cy="77" r="7" />
+    <circle cx="77.5" cy="76.5" r="6.5" stroke-width="1.5" opacity="0.6" />
+  </g>
+</svg>
