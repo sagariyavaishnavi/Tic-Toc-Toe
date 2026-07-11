@@ -7,8 +7,9 @@ import { cn } from '../lib/utils';
 const SOCKET_SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3001";
 
 // Create a singleton socket outside the component.
-// This guarantees it will NEVER be disconnected or duplicated by React's rendering quirks!
-const globalSocket = io(SOCKET_SERVER_URL, { autoConnect: false });
+// Using autoConnect: true ensures it connects immediately upon page load,
+// avoiding any React StrictMode mounting race conditions!
+const globalSocket = io(SOCKET_SERVER_URL, { autoConnect: true });
 
 export default function RoomManager({ onReady, playerName, setPlayerName }) {
   const [view, setView] = useState('choose'); // choose | create | join
@@ -19,10 +20,6 @@ export default function RoomManager({ onReady, playerName, setPlayerName }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Ensure it's connected
-    if (!globalSocket.connected) {
-      globalSocket.connect();
-    }
     setSocket(globalSocket);
 
     const handleRoomCreated = (code) => {
