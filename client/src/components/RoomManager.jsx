@@ -6,6 +6,10 @@ import { cn } from '../lib/utils';
 // Connect to backend (use environment variable in production, fallback to localhost in dev)
 const SOCKET_SERVER_URL = import.meta.env.VITE_SERVER_URL || "http://localhost:3001";
 
+// Create a singleton socket outside the component.
+// This guarantees it will NEVER be disconnected or duplicated by React's rendering quirks!
+const globalSocket = io(SOCKET_SERVER_URL, { autoConnect: false });
+
 export default function RoomManager({ onReady, playerName, setPlayerName }) {
   const [view, setView] = useState('choose'); // choose | create | join
   const [socket, setSocket] = useState(null);
@@ -15,46 +19,46 @@ export default function RoomManager({ onReady, playerName, setPlayerName }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const newSocket = io(SOCKET_SERVER_URL);
-    setSocket(newSocket);
+    // Ensure it's connected
+    if (!globalSocket.connected) {
+      globalSocket.connect();
+    }
+    setSocket(globalSocket);
 
-    // We do NOT disconnect the socket on unmount here, 
-    // because we need to pass this live socket to the GameController!
-  }, []);
-
-  useEffect(() => {
-    if (!socket) return;
-
-    socket.on('roomCreated', (code) => {
+    const handleRoomCreated = (code) => {
       setRoomCode(code);
       setStatus('Waiting for opponent to join...');
       setLoading(false);
-    });
+    };
 
-    socket.on('roomJoined', (code) => {
+    const handleRoomJoined = (code) => {
       setStatus('Joined! Waiting for game to start...');
-    });
+    };
 
-    socket.on('roomError', (msg) => {
+    const handleRoomError = (msg) => {
       setStatus(`Error: ${msg}`);
       setLoading(false);
-    });
+    };
 
-    socket.on('gameStart', (data) => {
-      // Player 1 (creator) is X, Player 2 is O
-      const mySymbol = data.players[0].id === socket.id ? 'X' : 'O';
-      const opponent = data.players.find(p => p.id !== socket.id);
+    const handleGameStart = (data) => {
+      const mySymbol = data.players[0].id === globalSocket.id ? 'X' : 'O';
+      const opponent = data.players.find(p => p.id !== globalSocket.id);
       const opponentName = opponent ? opponent.name : 'Opponent';
-      onReady({ socket, roomCode: roomCode || inputCode, playerSymbol: mySymbol, opponentName });
-    });
+      onReady({ socket: globalSocket, roomCode: roomCode || inputCode, playerSymbol: mySymbol, opponentName });
+    };
+
+    globalSocket.on('roomCreated', handleRoomCreated);
+    globalSocket.on('roomJoined', handleRoomJoined);
+    globalSocket.on('roomError', handleRoomError);
+    globalSocket.on('gameStart', handleGameStart);
 
     return () => {
-      socket.off('roomCreated');
-      socket.off('roomJoined');
-      socket.off('roomError');
-      socket.off('gameStart');
+      globalSocket.off('roomCreated', handleRoomCreated);
+      globalSocket.off('roomJoined', handleRoomJoined);
+      globalSocket.off('roomError', handleRoomError);
+      globalSocket.off('gameStart', handleGameStart);
     };
-  }, [socket, roomCode, inputCode, onReady]);
+  }, [roomCode, inputCode, onReady]);
 
   const handleCreate = () => {
     setLoading(true);

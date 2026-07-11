@@ -25,6 +25,7 @@ out/
 .eslintcache
 .vite/
 .cache/
+%LocalAppData%/
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

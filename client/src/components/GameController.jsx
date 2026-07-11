@@ -24,7 +24,6 @@ export default function GameController({ mode, roomData, playerName }) {
         setBoard((prev) => {
           const newBoard = [...prev];
           newBoard[data.index] = data.playerSymbol;
-          checkGameState(newBoard);
           return newBoard;
         });
         setXIsNext(data.xIsNext);
@@ -62,14 +61,14 @@ export default function GameController({ mode, roomData, playerName }) {
     }
   }, [xIsNext, board, winnerInfo, isDraw, isMultiplayer]);
 
-  const checkGameState = (currentBoard) => {
-    const info = checkWinnerInfo(currentBoard);
+  useEffect(() => {
+    const info = checkWinnerInfo(board);
     if (info) {
       setWinnerInfo(info);
-    } else if (isBoardFull(currentBoard)) {
+    } else if (isBoardFull(board)) {
       setIsDraw(true);
     }
-  };
+  }, [board]);
 
   const handleCellClick = (index, forcedSymbol = null) => {
     if (board[index] || winnerInfo || isDraw || opponentDisconnected) return;
@@ -94,7 +93,6 @@ export default function GameController({ mode, roomData, playerName }) {
       newBoard[index] = symbolToUse;
       setBoard(newBoard);
       setXIsNext(!xIsNext);
-      checkGameState(newBoard);
     }
   };
 
